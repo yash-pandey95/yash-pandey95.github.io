@@ -1,2 +1,0 @@
-# Yash Pandey - Resume Placeholder
-Place your real resume PDF file here as `resume.pdf` in the `public` directory.

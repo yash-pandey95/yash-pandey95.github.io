@@ -34,7 +34,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
               </span>
-              <span>B.Tech CSE (AIML) • 2nd Year</span>
+              <span>B.Tech CSE (AIML) • Class of 2028</span>
             </div>
 
             {/* Name */}
@@ -80,7 +80,7 @@ export default function Hero() {
               </a>
 
               <a
-                href="https://github.com"
+                href="https://github.com/yash-pandey95"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-medium text-slate-200 bg-[#0e1628]/80 hover:bg-[#152038] border border-white/10 hover:border-cyan-500/40 transition-all duration-300 hover:text-white"
@@ -90,7 +90,7 @@ export default function Hero() {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/yash-pandey01/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-medium text-slate-200 bg-[#0e1628]/80 hover:bg-[#152038] border border-white/10 hover:border-blue-500/40 transition-all duration-300 hover:text-white"
@@ -119,8 +119,8 @@ export default function Hero() {
                 <span className="text-sm font-bold text-slate-200">Python & C++</span>
               </div>
               <div>
-                <span className="block text-xs font-mono text-slate-400">Status</span>
-                <span className="text-sm font-bold text-cyan-400">B.Tech 4th Sem</span>
+                <span className="block text-xs font-mono text-slate-400">Graduation</span>
+                <span className="text-sm font-bold text-cyan-400">Graduating 2028</span>
               </div>
             </div>
           </div>

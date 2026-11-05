@@ -16,9 +16,10 @@ import {
 export default function Contact() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '',subject: '', message: '' });
+  const [isSending, setIsSending] = useState(false);
 
-  const placeholderEmail = 'yashpandey.cse@example.com';
+  const placeholderEmail = 'yashpan9548@gmail.com';
 
   const handleCopyEmail = () => {
     navigator.clipboard?.writeText(placeholderEmail);
@@ -26,15 +27,49 @@ export default function Contact() {
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormData({ name: '', email: '', message: '' });
-      setFormSubmitted(false);
-    }, 4000);
-  };
+  const handleFormSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!formData.name || !formData.email || !formData.message) {
+    return;
+  }
+
+  setIsSending(true);
+
+  try {
+    const response = await fetch("https://formspree.io/f/xaeekjro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      setFormSubmitted(true);
+
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+
+      setTimeout(() => {
+        setFormSubmitted(false);
+      }, 5000);
+    } else {
+      alert("Unable to send message. Please try again.");
+    }
+
+  } catch (error) {
+    console.error("Form submission error:", error);
+    alert("Something went wrong. Please try again.");
+  } finally {
+    setIsSending(false);
+  }
+};
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden bg-grid-pattern">
@@ -64,7 +99,7 @@ export default function Contact() {
             <div className="space-y-4">
               {/* GitHub Card */}
               <a
-                href="https://github.com"
+                href="https://github.com/yash-pandey95"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glass-panel p-5 rounded-2xl border border-white/10 hover:border-cyan-500/40 hover:bg-[#0e1628] transition-all duration-300 flex items-center justify-between group shadow-md"
@@ -85,7 +120,7 @@ export default function Contact() {
 
               {/* LinkedIn Card */}
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/yash-pandey01/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glass-panel p-5 rounded-2xl border border-white/10 hover:border-blue-500/40 hover:bg-[#0e1628] transition-all duration-300 flex items-center justify-between group shadow-md"
@@ -135,11 +170,8 @@ export default function Contact() {
 
               {/* Download Resume Card */}
               <a
-                href="#resume"
-                onClick={(e) => {
-                  e.preventDefault();
-                  alert('Resume download placeholder ready. Configure the file link in public/resume.pdf.');
-                }}
+                href={`${import.meta.env.BASE_URL}Yash_Pandey_Resume01.pdf`}
+                download="Yash_Pandey_Resume01.pdf"
                 className="glass-panel p-5 rounded-2xl border border-white/10 hover:border-emerald-500/40 hover:bg-[#0e1628] transition-all duration-300 flex items-center justify-between group shadow-md"
               >
                 <div className="flex items-center gap-3.5">
@@ -199,7 +231,7 @@ export default function Contact() {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="e.g. Alex Morgan"
+                        placeholder="e.g. Sundar Pichai"
                         className="w-full bg-[#090e1a] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500/60 transition-colors"
                       />
                     </div>
@@ -220,6 +252,8 @@ export default function Contact() {
                     <label className="text-xs font-mono text-slate-300">Subject / Discussion Topic</label>
                     <input
                       type="text"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       placeholder="e.g. ML Internship / Project Collaboration / Tech Discussion"
                       className="w-full bg-[#090e1a] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500/60 transition-colors"
                     />
@@ -239,10 +273,11 @@ export default function Contact() {
 
                   <button
                     type="submit"
+                    disabled={isSending}
                     className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:to-cyan-500 shadow-[0_0_20px_rgba(0,102,255,0.35)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all duration-300"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Send Message</span>
+                    <span>{isSending ? "Sending..." : "Send Message"}</span>
                   </button>
                 </form>
               )}
